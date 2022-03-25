@@ -1,0 +1,85 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <h1 class="text-center">Edit a Playground</h1>
+    <div class="col-6 offset-3">
+        <form
+            action="/playgrounds/<%= playground._id %>?_method=PUT "
+            method="POST"
+            novalidate
+            class="validated-form"
+        >
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="playground[title]"
+                    value="<%= playground.title%>"
+                    id="title"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="location">Address</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    value="<%= playground.address%>"
+                    name="playground[address]"
+                    id="address"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="image">Image URL</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    value="<%= playground.image%>"
+                    name="playground[image]"
+                    id="image"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="devices">Devices</label>
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="playground[devices]"
+                        id="devices"
+                        value="<%= playground.devices%>"
+                        required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="description"> Description</label>
+                <textarea
+                    class="form-control"
+                    type="text"
+                    name="playground[description]"
+                    id="description"
+                    required
+                >
+                <%= playground.description%>
+                </textarea>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-info">Update a Playground</button>
+            </div>
+        </form>
+        <div>
+            <a href="/playgrounds/<%= playground._id%> ">Back to Playground</a>
+        </div>
+    </div>
+</div>

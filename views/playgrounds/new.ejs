@@ -1,0 +1,81 @@
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    <h1 class="text-center">New Playground</h1>
+    <div class="col-6 offset-3">
+        <form
+            action="/playgrounds"
+            method="POST"
+            novalidate
+            class="validated-form"
+        >
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="playground[title]"
+                    id="title"
+                    placeholder="Enter title"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="address">Address</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="playground[address]"
+                    id="address"
+                    placeholder="Street, City, State"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="image">Image URL</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="playground[image]"
+                    id="image"
+                    placeholder="Image url"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="devices">Devices</label>
+                <div class="input-group">
+                    <input
+                        class="form-control"
+                        type="text"
+                        name="playground[devices]"
+                        id="devices"
+                        required
+                    />
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="description">Description </label>
+                <textarea
+                    class="form-control"
+                    type="text"
+                    name="playground[description]"
+                    id="description"
+                    required
+                ></textarea>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class="mb-3">
+                <button class="btn btn-success">Add a Playground</button>
+            </div>
+        </form>
+        <div><a href="/playgrounds">All Playgrounds</a></div>
+    </div>
+</div>
