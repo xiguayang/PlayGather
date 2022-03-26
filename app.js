@@ -10,7 +10,10 @@ const ExpressError = require('./utils_helper/ExpressError')
 
 
 const playgrounds = require('./routes/playgrounds')
-//const reviews = require('./routes/reviews')
+const reviews = require('./routes/reviews')
+
+const { render } = require('ejs');
+
 
 mongoose.connect('mongodb://localhost:27017/play-gather',{
     useNewUrlParser: true,
@@ -60,7 +63,7 @@ app.use((req, res, next)=>{
 
 
 app.use('/playgrounds', playgrounds);
-//app.use('/campgrounds/:id/reviews', reviews);
+app.use('/playgrounds/:id/reviews', reviews);
 
 
 

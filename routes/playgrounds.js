@@ -41,7 +41,7 @@ router.post('/',validatePlayground,catchAsync(async(req,res,next)=>{
 //show specific playground details
 router.get('/:id', catchAsync(async(req,res,next)=>{
     
-    const playground = await Playground.findById(req.params.id)
+    const playground = await Playground.findById(req.params.id).populate('reviews');
     if(!playground){
         req.flash('error','Cannot find that campground')
         return res.redirect('/playgrounds')
