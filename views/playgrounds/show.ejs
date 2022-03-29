@@ -70,7 +70,10 @@
         <% for( let review of playground.reviews ) { %>
         <div class="card mb-3">
             <div class="card-body">
-                <h5 class="card-title">Rating: <%= review.rating %></h5>
+                <h5 class="card-title">  
+                    <%= review.author.username%>
+                </h5>
+                <p class="card-text">Rating: <%= review.rating %></p>
                 <p class="card-text">Review: <%= review.body %></p>
             </div>
             <form

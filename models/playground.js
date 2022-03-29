@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const Review = require('./review');
+const Playdates = require('./playdate');
 const Schema = mongoose.Schema;
 
 const PlaygroundSchema = new Schema({
+    
     title: String,
     description: String,
     theme: String,
@@ -14,6 +16,12 @@ const PlaygroundSchema = new Schema({
         {
             type: Schema.Types.ObjectId,
             ref: 'Review'
+        }
+    ],
+    playdates:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Playdate'
         }
     ]
 });

@@ -6,13 +6,17 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const methodOverride = require('method-override');
 //require our defined error handler class
-const ExpressError = require('./utils_helper/ExpressError')
+const ExpressError = require('./utils_helper/ExpressError');
+const passport = require('passport');
+const localStrategy = require('passport-local');
+const User = require('./models/user');
 
 
-const playgrounds = require('./routes/playgrounds')
-const reviews = require('./routes/reviews')
+const playgroundRoutes = require('./routes/playgrounds')
+const reviewRoutes = require('./routes/reviews')
+const userRoutes = require('./routes/users')
 
-const { render } = require('ejs');
+//const { render } = require('ejs');
 
 
 mongoose.connect('mongodb://localhost:27017/play-gather',{
@@ -53,17 +57,33 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 
 app.use(flash());
+
+//passport middleware
+//passport.session must behind sessionConfig
+app.use(passport.initialize())
+app.use(passport.session())
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 //add flash middleware, if any flash key found, show the flash
 app.use((req, res, next)=>{
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
 })
 
+app.get('/fakeUser',async(req,res)=>{
+    const user = new User({email:'abbb@gmail.com', username:'ab hhh'})
+    const newUser = await User.register(user,'chicken');
+    res.send(newUser)
+})
 
-
-app.use('/playgrounds', playgrounds);
-app.use('/playgrounds/:id/reviews', reviews);
+app.use('/', userRoutes);
+app.use('/playgrounds', playgroundRoutes);
+app.use('/playgrounds/:id/reviews', reviewRoutes);
 
 
 

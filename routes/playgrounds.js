@@ -7,6 +7,7 @@ const Playground = require('../models/playground');
 
 //require the Joi playgroundSchema, reviewSchema for validation
 const {playgroundSchema} = require('../schemas.js');
+const {isLoggedIn} = require('../middleware')
 //define a validation middleware function to validate the input campground object
 const validatePlayground =(req, res, next) =>{
     const {error} = playgroundSchema.validate(req.body);
@@ -25,12 +26,13 @@ router.get('/',catchAsync(async(req,res,next)=>{
 }))
 
 //add a new playground: playgrounds/new
-router.get('/new', (req,res)=>{
+router.get('/new',isLoggedIn, (req,res)=>{
+
     res.render('playgrounds/new');
 })
 //playground/new: post save to db
 //add validation middleware function for add new object
-router.post('/',validatePlayground,catchAsync(async(req,res,next)=>{
+router.post('/',isLoggedIn,validatePlayground,catchAsync(async(req,res,next)=>{
     const playground = new Playground(req.body.playground);
     //res.send(req.body);
     await playground.save();
@@ -41,7 +43,8 @@ router.post('/',validatePlayground,catchAsync(async(req,res,next)=>{
 //show specific playground details
 router.get('/:id', catchAsync(async(req,res,next)=>{
     
-    const playground = await Playground.findById(req.params.id).populate('reviews');
+    const playground = await (await Playground.findById(req.params.id).populate('reviews'));
+    
     if(!playground){
         req.flash('error','Cannot find that campground')
         return res.redirect('/playgrounds')
@@ -50,7 +53,7 @@ router.get('/:id', catchAsync(async(req,res,next)=>{
 }))
 
 //playgrounds/:id/edit:  edit form with original value
-router.get('/:id/edit',catchAsync(async(req,res,next)=>{
+router.get('/:id/edit',isLoggedIn,catchAsync(async(req,res,next)=>{
     const playground = await Playground.findById(req.params.id);
     if(!playground){
         req.flash('error','Cannot find that playground')
@@ -59,7 +62,7 @@ router.get('/:id/edit',catchAsync(async(req,res,next)=>{
     res.render('playgrounds/edit', {playground})
 }) )
 //playgrounds/:id : update to database from edit page
-router.put('/:id', validatePlayground,catchAsync(async(req,res,next)=>{
+router.put('/:id', isLoggedIn,validatePlayground,catchAsync(async(req,res,next)=>{
     //res.send('it worked') used for test
     const {id} = req.params;
     const playground = await Playground.findByIdAndUpdate(id,{...req.body.playground})
@@ -68,7 +71,7 @@ router.put('/:id', validatePlayground,catchAsync(async(req,res,next)=>{
 }))
 
 //playgrounds/:id   :delete from database
-router.delete('/:id',catchAsync(async(req, res,next)=>{
+router.delete('/:id',isLoggedIn,catchAsync(async(req, res,next)=>{
     const {id} = req.params;
     await Playground.findByIdAndDelete(id);
     req.flash('success','Successfully deleted the playground!')

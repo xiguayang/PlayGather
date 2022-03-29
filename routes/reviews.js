@@ -18,6 +18,10 @@ const validateReview = (req, res, next) =>{
 router.post('/', validateReview, catchAsync(async(req,res)=>{
     const playground = await Playground.findById(req.params.id);
     const review = new Review(req.body.review);
+    if(req.user){
+        review.author = req.user._id;
+    }
+    
     //console.log(review.rating)
     playground.reviews.push(review);
     await review.save();

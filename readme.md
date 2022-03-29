@@ -10,6 +10,9 @@ A platform provides private social network for you and your child. An easy way t
     - Admin: provid Edit/Update, Delete features
     - Users: comments and rates 
 ### Free Account Registration & Login/out
+    - library Passport
+        http://www.passportjs.org/packages/
+        `npm i passport passport-local passport-local-mongoose`
 ### Personal Family profile
     - Avatar, Name, Kids Age, hobbies
     - Set private or public Sharing
@@ -24,3 +27,16 @@ A platform provides private social network for you and your child. An easy way t
         - contact and age/hobbies info 
 ### *Further Features*
     - Real-time communication 
+
+
+
+    1 playground ===> many reviews
+    1 playgronud ===> many playdates
+    1 playdate ====> 1 user(sponser)
+    1 playdate ====> many users(participants)
+    1 user ====> many playdates as sponsers
+
+    1 user ===> many reviews
+
+
+focused on exploring and having fun with your littles-while still getting to enjoy what you love, as well!
