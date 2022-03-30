@@ -8,11 +8,15 @@
                 <p class="card-text"><%= playground.description%></p>
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item text-muted">
+                <li class="list-group-item ">
                     <%= playground.address %>
+                </li>
+                <li class="list-group-item text-muted">
+                    by <%= playground.author.username %>
                 </li>
                 <li class="list-group-item"><%= playground.deivices %></li>
             </ul>
+            <% if(currentUser && playground.author.equals(currentUser._id)) { %> 
             <div class="card-body">
                 <a
                     class="card-link btn btn-info"
@@ -28,13 +32,16 @@
                     <button class="btn btn-danger">Delete</button>
                 </form>
             </div>
+            <% } %> 
+
             <div class="card-footer text-muted">
-                <a href="/playgrounds">All Playgrounds</a>
+                2 days ago
             </div>
         </div>
             
     </div>
     <div class="col-6">
+        <% if(currentUser) { %> 
         <h2>Leave a Review</h2>
         <form
             action="/playgrounds/<%= playground._id%>/reviews "
@@ -67,21 +74,25 @@
             </div>
             <button class="btn btn-success">Submit</button>
         </form>
+        <% } %> 
         <% for( let review of playground.reviews ) { %>
         <div class="card mb-3">
             <div class="card-body">
                 <h5 class="card-title">  
-                    <%= review.author.username%>
+                    <%= review.rating %>
                 </h5>
-                <p class="card-text">Rating: <%= review.rating %></p>
+                <p class="card-subtitle mb-2 text-muted">By <%= review.author.username %></p>
                 <p class="card-text">Review: <%= review.body %></p>
+                <%  if( currentUser && review.author.equals(currentUser._id))  {%>
+                    <form
+                        action="/playgrounds/<%=playground._id%>/reviews/<%=review._id%>?_method=DELETE"
+                        method="POST"
+                    >
+                        <button class="btn btn-sm btn-danger">delete</button>
+                    </form>
+                 <% } %>    
             </div>
-            <form
-                action="/playgrounds/<%=playground._id%>/reviews/<%=review._id%>?_method=DELETE"
-                method="POST"
-            >
-                <button class="btn btn-sm btn-danger">delete</button>
-            </form>
+
         </div>
         <% } %>
     </div>

@@ -28,6 +28,7 @@ const seedDB = async () => {
         const random1000= Math.floor(Math.random()*1000);
         //const price = Math.floor(Math.random()*20)+10;
         const newPlaygraound = new Playground({
+            author:'6244a275482b97c64ca58a9e',
             address:`${cities[random1000].city}, ${cities[random1000].state}`,
             title:`${sample(descriptors)} ${sample(themes)}`,
             image: 'https://source.unsplash.com/collection/9479488',
