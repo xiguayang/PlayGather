@@ -12,8 +12,11 @@ module.exports.renderNewForm =(req,res)=>{
 module.exports.createPlayground =async(req,res,next)=>{
     const playground = new Playground(req.body.playground);
     playground.author = req.user._id;
+    console.log(req.files);
+    playground.images = req.files.map(f=>({url:f.path, filename: f.filename}))
     //res.send(req.body);
     await playground.save();
+    console.log(playground);
     req.flash('success','Successfully added a new playground!')
     res.redirect(`/playgrounds/${playground._id}`)
 }

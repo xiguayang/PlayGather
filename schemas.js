@@ -5,7 +5,7 @@ module.exports.playgroundSchema = Joi.object({
     playground:Joi.object({
         title: Joi.string().required(),
        // zipcode: Joi.number().required().min(5),
-        image: Joi.string().required(),
+        //image: Joi.string().required(),
         address: Joi.string().required(),
         description: Joi.string().required(),
         devices: Joi.string().required(),

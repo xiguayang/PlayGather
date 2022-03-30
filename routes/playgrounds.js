@@ -7,11 +7,24 @@ const catchAsync = require('../utils_helper/catchAsync')
 //const {playgroundSchema} = require('../schemas.js');
 const {isLoggedIn, isAuthor, validatePlayground} = require('../middleware')
 const playgrounds = require('../controllers/playgrounds')
+const multer  = require('multer');
+const {storage} = require('../cloudinary');
+const upload = multer({ storage })
+// const upload = multer({ dest: 'uploads/' })
 
 
 router.route('/')
     .get(catchAsync(playgrounds.index))
-    .post(isLoggedIn,validatePlayground,catchAsync(playgrounds.createPlayground));
+    .post(isLoggedIn,upload.array('image'),validatePlayground,catchAsync(playgrounds.createPlayground));
+    // .post(upload.array('image'),(req,res)=>{
+    //     console.log(req.body,req.files);
+    //     res.send("it worked")
+    // })
+    // .post(upload.single('image'),(req,res)=>{
+    //     console.log(req.body,req.file);
+    //     res.send("it worked")
+    // })
+    //.post(isLoggedIn,validatePlayground,catchAsync(playgrounds.createPlayground));
     
 //show playground list
 //router.get('/',catchAsync(playgrounds.index));
