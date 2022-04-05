@@ -10,7 +10,8 @@ module.exports.playgroundSchema = Joi.object({
         description: Joi.string().required(),
         devices: Joi.string().required(),
         theme: Joi.string()
-    }).required()
+    }).required(),
+    deleteImages:Joi.array()
 })
 
 module.exports.reviewSchema = Joi.object({

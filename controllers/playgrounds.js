@@ -1,4 +1,5 @@
 const Playground = require('../models/playground');
+const {cloudinary} = require('../cloudinary')
 
 module.exports.index = async(req,res,next)=>{
     const playgrounds = await Playground.find({});
@@ -13,10 +14,10 @@ module.exports.createPlayground =async(req,res,next)=>{
     const playground = new Playground(req.body.playground);
     playground.author = req.user._id;
     console.log(req.files);
-    playground.images = req.files.map(f=>({url:f.path, filename: f.filename}))
+    playground.images = req.files.map(f=>({url:f.path, filename: f.filename}));
     //res.send(req.body);
     await playground.save();
-    console.log(playground);
+    
     req.flash('success','Successfully added a new playground!')
     res.redirect(`/playgrounds/${playground._id}`)
 }
@@ -48,9 +49,22 @@ module.exports.renderEdit =async(req,res,next)=>{
 module.exports.edit =async(req,res,next)=>{
     //res.send('it worked') used for test
     const {id} = req.params;
+    console.log(req.body);
     const playground = await Playground.findByIdAndUpdate(id,{...req.body.playground})
+    const imgs =  req.files.map(f=>({url:f.path, filename: f.filename}));
+    playground.images.push(...imgs);
+    await playground.save();
+    if (req.body.deleteImages) {
+        // for (let filename of req.body.deleteImages) {
+        //     await cloudinary.uploader.destroy(filename);
+        // }
+        await playground.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
+    }
     req.flash('success','Successfully updated the playground!')
     res.redirect(`/playgrounds/${playground._id}`)
+
+
+
 }
 module.exports.delete =async(req, res,next)=>{
     const {id} = req.params;

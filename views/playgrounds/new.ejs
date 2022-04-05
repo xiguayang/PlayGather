@@ -34,20 +34,8 @@
                 />
                 <div class="valid-feedback">Looks good!</div>
             </div>
-            <input type="file" name="image" id="" multiple>
-            <!-- <input type="file" name="image" id="" > -->
-            <!-- <div class="mb-3">
-                <label class="form-label" for="image">Image URL</label>
-                <input
-                    class="form-control"
-                    type="text"
-                    name="playground[image]"
-                    id="image"
-                    placeholder="Image url"
-                    required
-                />
-                <div class="valid-feedback">Looks good!</div>
-            </div> -->
+
+
             <div class="mb-3">
                 <label class="form-label" for="devices">Devices</label>
                 <div class="input-group">
@@ -73,7 +61,10 @@
                 ></textarea>
                 <div class="valid-feedback">Looks good!</div>
             </div>
-
+            <div class="mb-3">
+                <label for="image" class="form-label">Add image(s)...</label>
+                <input class="form-control" type="file" id="image" name="image" multiple>
+            </div>
             <div class="mb-3">
                 <button class="btn btn-success">Add a Playground</button>
             </div>

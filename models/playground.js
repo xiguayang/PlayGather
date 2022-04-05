@@ -3,6 +3,13 @@ const Review = require('./review');
 const Playdates = require('./playdate');
 const Schema = mongoose.Schema;
 
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+})
+ImageSchema.virtual('thumbnail').get(function(){
+    return this.url.replace('/upload','/upload/w_200');
+});
 const PlaygroundSchema = new Schema({
     
     title: String,
@@ -11,12 +18,7 @@ const PlaygroundSchema = new Schema({
     //zipCode: String,
     address: String,
     devices: String,
-    images: [
-        {
-            url: String,
-            filename: String
-        }   
-    ],
+    images: [ ImageSchema],
     author: {
         type: Schema.Types.ObjectId,
         ref:'User'

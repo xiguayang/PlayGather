@@ -39,7 +39,7 @@ router.get('/new',isLoggedIn, playgrounds.renderNewForm);
 
 router.route('/:id')
     .get(catchAsync(playgrounds.showPlayground))
-    .put(isLoggedIn,isAuthor, validatePlayground,catchAsync(playgrounds.edit))
+    .put(isLoggedIn,isAuthor, upload.array('image'), validatePlayground,catchAsync(playgrounds.edit))
     .delete(isLoggedIn,isAuthor, catchAsync(playgrounds.delete));
 //show specific playground details
 //router.get('/:id', catchAsync(playgrounds.showPlayground));
