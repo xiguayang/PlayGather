@@ -21,5 +21,9 @@ const PlaydatesSchema = new Schema({
     durition:{
         type: Number,
         required: true,
-    } 
+    },
+    active:{
+        type: Boolean,
+        default: false,
+    }
 });

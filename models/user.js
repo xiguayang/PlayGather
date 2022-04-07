@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const passportLocalMongoose = require('passport-local-mongoose');
 const Playdates = require('./playdate');
 const Review = require('./review');
+const Child = require('./child')
 
 const UserSchema= new Schema({
     email:{
@@ -20,10 +21,14 @@ const UserSchema= new Schema({
             ref: 'Playdate'
         }
     ],
-    reviews:{
+    reviews:[{
         type:Schema.Types.ObjectId,
         ref:'Review'
-    }
+    }],
+    children:[{
+        type:Schema.Types.ObjectId,
+        ref:'Child'
+    }]
 });
 UserSchema.plugin(passportLocalMongoose);
 module.exports= mongoose.model('User', UserSchema);

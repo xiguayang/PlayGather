@@ -43,3 +43,11 @@ module.exports.reviewSchema = Joi.object({
         body: Joi.string().required().escapeHTML()
     }).required()
 })
+
+// module.exports.childSchema = Joi.object({
+//     child:Joi.object({
+//         age: Joi.number().required().min(1).max(16),
+//         gender: Joi.string().required().escapeHTML()
+//     }).required()
+// })
+
