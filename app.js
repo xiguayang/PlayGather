@@ -23,6 +23,7 @@ const MongoStore = require('connect-mongo');
 const playgroundRoutes = require('./routes/playgrounds')
 const reviewRoutes = require('./routes/reviews')
 const userRoutes = require('./routes/users')
+const playdateRoutes = require('./routes/playdates')
 
 
 //const dbUrl = process.env.DB_URL;
@@ -159,6 +160,7 @@ app.get('/fakeUser',async(req,res)=>{
 app.use('/', userRoutes);
 app.use('/playgrounds', playgroundRoutes);
 app.use('/playgrounds/:id/reviews', reviewRoutes);
+app.use('/playgrounds/:id/playdates',playdateRoutes);
 
 
 

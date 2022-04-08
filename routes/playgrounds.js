@@ -47,6 +47,7 @@ router.route('/:id')
 //playgrounds/:id/edit:  edit form with original value
 router.get('/:id/edit',isLoggedIn,isAuthor, catchAsync(playgrounds.renderEdit));
 
+
 //playgrounds/:id : update to database from edit page
 //router.put('/:id', isLoggedIn,isAuthor, validatePlayground,catchAsync(playgrounds.edit));
 

@@ -3,7 +3,7 @@ const Playground = require('./playground');
 const User = require('./user');
 const Schema = mongoose.Schema;
 
-const PlaydatesSchema = new Schema({
+const PlaydateSchema = new Schema({
     sponser:{
         type: Schema.Types.ObjectId,
         ref:'User'
@@ -14,9 +14,17 @@ const PlaydatesSchema = new Schema({
             ref:'User'
         }
     ],
+    totalNum:{
+        type: Number,
+        required: true,
+    },
+    title:{
+        type: String,
+        required: true,
+    },
     date:{
         type: Date,
-        required: true,
+        
     },
     durition:{
         type: Number,
@@ -25,5 +33,10 @@ const PlaydatesSchema = new Schema({
     active:{
         type: Boolean,
         default: false,
+    },
+    remarks:{
+        type: String
     }
 });
+
+module.exports =mongoose.model('Playdate',PlaydateSchema);
