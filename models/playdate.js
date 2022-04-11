@@ -24,7 +24,11 @@ const PlaydateSchema = new Schema({
     },
     date:{
         type: Date,
-        
+        default: Date.now 
+    },
+    contact:{
+        type: String,
+        required: true,
     },
     durition:{
         type: Number,

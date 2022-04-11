@@ -28,7 +28,15 @@ module.exports.showPlayground = async(req,res,next)=>{
         populate:{
             path: 'author'
         }
-    }).populate('author');
+    }).populate(
+        {
+            path:'playdates',
+            populate:{
+                path:'sponser',
+                path:'paticipates'
+            }
+        }
+    ).populate('author');
     //const playground = await (await Playground.findById(req.params.id).populate('reviews'));
     //console.log(playground)
     if(!playground){
@@ -62,8 +70,6 @@ module.exports.edit =async(req,res,next)=>{
     }
     req.flash('success','Successfully updated the playground!')
     res.redirect(`/playgrounds/${playground._id}`)
-
-
 
 }
 module.exports.delete =async(req, res,next)=>{

@@ -3,6 +3,7 @@ const {reviewSchema, playgroundSchema} = require('./schemas.js');
 const ExpressError = require('./utils_helper/ExpressError');
 const Review = require('./models/review')
 const Playground = require('./models/playground')
+const Playdate = require('./models/playdate')
 module.exports.isLoggedIn = (req,res,next)=>{
     //console.log("REQ.USER...", req.user)
     //middleware from passport: isAuthenticated
@@ -29,6 +30,18 @@ module.exports.isReviewAuthor = async(req,res, next) =>{
     const {id, reviewId} = req.params;
     const review = await Review.findById(reviewId);
     if(!review.author.equals(req.user._id)){
+        req.flash('error', 'You do not have permission to do that!');
+        return res.redirect(`/playgrounds/${id}`);
+    }
+    next();
+}
+
+module.exports.isPlaydateSponser = async(req,res, next) =>{
+    const {playdateId} = req.params;
+    //console.log(id)
+    const playdate = await Playdate.findById(playdateId);
+   // console.log(playdate)
+    if(!playdate.sponser.equals(req.user._id)){
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/playgrounds/${id}`);
     }

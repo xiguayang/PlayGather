@@ -22,6 +22,7 @@ A platform provides private social network for you and your child. An easy way t
         - Schedule timeSlot
         - Contact info
         - Tips 
+        - cancel
     - List avaliable playdates
         - show timeslot
         - contact and age/hobbies info 

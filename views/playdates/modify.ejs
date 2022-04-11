@@ -1,38 +1,26 @@
 <% layout('layouts/boilerplate') %>
 <div class="row">
-    <h1 class="text-center">Arrange a playdate</h1>
+    <h1 class="text-center">Modify the Playdate</h1>
     <div class="col-6 offset-3">
-        <% if(currentUser) { %> 
-            <form
-            action="/playgrounds/<%= playground._id%>/playdates "
+        <form
+            action="/playgrounds/<%= id %>/playdates/<%= playdate._id%>?_method=PUT "
             method="POST"
-            class="mb-4 validated-form"
             novalidate
-            >
+            class="validated-form"
+
+        >
             <div class="mb-3">
                 <label class="form-label" for="title">Title</label>
                 <input
                     class="form-control"
                     type="text"
                     name="playdate[title]"
+                    value="<%= playdate.title%>"
                     id="title"
-                    placeholder="Enter title"
                     required
                 />
                 <div class="valid-feedback">Looks good!</div>
             </div>
-            <div class="mb-3">
-                <label class="form-label" for="contact">Contact </label>
-                <input
-                    class="form-control"
-                    type="text"
-                    name="playdate[contact]"
-                    id="contact"
-                    placeholder=<%= currentUser.email %>
-                ></input>
-                <div class="valid-feedback">Looks good!</div>
-            </div>
-
             <div class="mb-3">
                 <label class="form-label" for="totalNum">Total Number</label>
                 <input
@@ -40,7 +28,7 @@
                     type="text"
                     name="playdate[totalNum]"
                     id="totalNum"
-                    placeholder="Number of Families attended"
+                    value="<%= playdate.totalNum%>"
                     required
                 />
                 <div class="valid-feedback">Looks good!</div>
@@ -50,23 +38,13 @@
                 <input
                     class="form-control"
                     type="datetime-local"
-                    name="date"
+                    name="playdate[date]"
                     id="date"
-                    min="2022-04-01"
+                    value=<%= new Date(playdate.date).toISOString() %>
                     required
                 ></input>
             </div>
-            <!-- <div class="mb-3">
-                <label class="form-label" for="time">Time </label>
-                <input
-                    class="form-control"
-                    type="time"
-                    name="playdate[time]"
-                    id="time"
-                    required
-                ></input>
-            </div> -->
-            
+
             <div class="mb-3">
                 <label class="form-label" for="durition">Durition </label>
                 <input
@@ -74,11 +52,12 @@
                     type="text"
                     name="playdate[durition]"
                     id="durition"
-                    placeholder="Enter estimated time (hrs)"
+                    value="<%= playdate.durition%>"
                     required
                 ></input>
                 <div class="valid-feedback">Looks good!</div>
             </div>
+            
             <div class="mb-3">
                 <label class="form-label" for="remarks">Remarks </label>
                 <textarea
@@ -86,15 +65,27 @@
                     type="text"
                     name="playdate[remarks]"
                     id="remarks"
-                ></textarea>
+                ><%= playdate.remarks%></textarea>
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="contact">Contact </label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="playdate[contact]"
+                    id="contact"
+                    value="<%= playdate.contact%>"
+                ></input>
                 <div class="valid-feedback">Looks good!</div>
             </div>
 
             <div class="mb-3">
-                <button class="btn btn-success">Submit</button>
+                <button class="btn btn-info">Update a Playdate</button>
             </div>
-            </form>
-            <div><a href="/playgrounds/<%= playground._id%>">Cancel</a></div>
-        <% }%> 
+        </form>
+        <!-- <div>
+            <a href="/">Back to Playground</a>
+        </div> -->
     </div>
 </div>
