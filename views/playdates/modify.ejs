@@ -40,7 +40,7 @@
                     type="datetime-local"
                     name="playdate[date]"
                     id="date"
-                    value=<%= new Date(playdate.date).toISOString() %>
+                    value=<%= datevalue %>
                     required
                 ></input>
             </div>
@@ -79,7 +79,7 @@
                 ></input>
                 <div class="valid-feedback">Looks good!</div>
             </div>
-
+            
             <div class="mb-3">
                 <button class="btn btn-info">Update a Playdate</button>
             </div>

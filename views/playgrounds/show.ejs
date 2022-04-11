@@ -142,7 +142,7 @@
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item ">
-                                <%= new Date(playdate.date).toUTCString() %>
+                                <%= new Date(playdate.date.toLocaleString("en-US")) %>
                             </li>
 
                             <li class="list-group-item ">
@@ -161,6 +161,13 @@
 
                             <% }else{%>
                                 <a class="card-link btn btn-success" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/modify ">Modify</a>
+                                <form
+                                class="d-inline"
+                                action="/playgrounds/<%=playground._id%>/playdates/<%= playdate._id %>?_method=DELETE"
+                                method="POST"
+                            >
+                                <button class="btn btn-sm btn-danger">Cancel</button>
+                            </form>
                                 
                             <% } %>
                         </div>

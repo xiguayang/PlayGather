@@ -15,8 +15,8 @@ module.exports.createPlaydate =async(req,res,next)=>{
     if(playdate.contact==""){
         playdate.contact =req.user.email; 
     }
-    //const date = req.body.date;
-    console.log(playdate);
+    //console.log(playdate.date)
+   // console.log(playdate);
     playground.playdates.push(playdate);
     
     // res.send(req.body);
@@ -31,10 +31,27 @@ module.exports.renderPlaydateModify =async(req,res)=>{
     const {id,playdateId} = req.params;
 
     const playdate = await Playdate.findById(playdateId);
-    //const playground = await Playground.findById(req.params.id);
-    //console.log(playdate)
-    res.render('playdates/modify',{playdate, id});
+
+    var options = {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    };
+    const dayVal = playdate.date.toLocaleString("en-US", options).replace(/\//g, '-');
+    const day = dayVal.slice(-4)+"-"+dayVal.substring(0,5);
+    //2022-04-14T00:00:01
+    let o = new Intl.DateTimeFormat("en" , {
+        timeStyle: "medium",
+        hour12: false
+    });
+    const timeVal = o.format(playdate.date)
+
+    const datevalue = day+"T"+timeVal
+    console.log(datevalue)
+    //const datevalue =formatDate(playdate.date);
+    res.render('playdates/modify',{playdate, id, datevalue});
 }
+
 module.exports.renderJoinPlaydate =async(req,res)=>{
     const {playdateId} = req.params;
 
@@ -86,4 +103,15 @@ module.exports.modifyPlaydate =async(req,res,next)=>{
     // }
     // req.flash('success','Successfully updated the playground!')
     // res.redirect(`/playgrounds/${playground._id}`)
+}
+
+
+
+module.exports.deletePlaydate = async(req, res)=>{
+    const {id, playdateId} = req.params;
+    //use pull to delete the review related in  the playground
+    await Playground.findByIdAndUpdate(id, {$pull:{playdates: playdateId}});
+    await Playdate.findByIdAndDelete(playdateId);
+    req.flash('success','Successfully Cancel the Playdate!')
+    res.redirect(`/playgrounds/${id}`);
 }
