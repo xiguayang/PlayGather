@@ -1,1 +1,71 @@
-<h2>join playdate</h2>
+<% layout('layouts/boilerplate') %>
+<div class="row">
+    
+    <div class="col-6 offset-3">
+        <% if(playdate.active && !playdate.sponser._id.equals(currentUser._id)){ %> 
+  
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title">  
+                            <%=playdate.title%> 
+                        </h5>
+                        <p class="card-text text-muted"><%= playdate.sponser.email %></p>                  
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item ">
+                            <%= new Date(playdate.date.toLocaleString("en-US")) %>
+                        </li>
+
+                        <li class="list-group-item ">
+                            reserved: <%= playdate.paticipates.length+1 %> / <%= playdate.totalNum %>
+                        </li>
+                        <% if(playdate.remarks){ %> 
+                        <li class="list-group-item ">
+                            <%= playdate.remarks %>
+                        </li>
+                        <% } %> 
+                    </ul>
+                </div>
+
+        <% } %> 
+        <br>
+        <div>
+        <form
+            action="/playgrounds/<%= id %>/playdates/<%= playdate._id%>/join?_method=PUT "
+            method="POST"
+            novalidate
+            class="validated-form"
+
+        >
+            <div class="mb-3">
+                <label class="form-label" for="name">Name</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="paticipate[name]"
+                    value="<%= currentUser.username%>"
+                    id="name"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="email">Contact Info</label>
+                <input
+                    class="form-control"
+                    type="text"
+                    name="paticipate[email]"
+                    id="email"
+                    value="<%= currentUser.email%>"
+                    required
+                />
+                <div class="valid-feedback">Looks good!</div>
+            </div>
+            
+            <div class="mb-3">
+                <button class="btn btn-info">Join the Playdate</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>

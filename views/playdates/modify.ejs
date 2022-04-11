@@ -79,10 +79,20 @@
                 ></input>
                 <div class="valid-feedback">Looks good!</div>
             </div>
-            
             <div class="mb-3">
-                <button class="btn btn-info">Update a Playdate</button>
+                <button class="btn btn-info">
+            <!-- <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="isActive">
+                <label class="form-check-label" for="isActive">Re Active the playdate?</label>
+            </div> -->
+            <% if(!playdate.active){%> 
+                ReActive the Playdate
+            <% }else{ %> 
+                Update the Playdate
+            <% } %> 
+            </button>
             </div>
+
         </form>
         <!-- <div>
             <a href="/">Back to Playground</a>

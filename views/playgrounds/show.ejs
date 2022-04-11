@@ -129,20 +129,30 @@
 
         </div>
     </div>
+
     <div class ="row ">
+        <h3>My Playdates</h3>
         <% for( let playdate of playground.playdates ) { %>  
-            <% if(playdate.active){ %> 
+            <% if(playdate.sponser._id.equals(currentUser._id)){ %> 
                 <div class="col-6 col-md-4">    
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">  
-                                <%=playdate.title%> 
-                            </h5>
+                            <% if(!playdate.active){ %> 
+                            <h6 class="card-title text-muted">  
+
+                                [Cancelled] <%=playdate.title%> 
+                            </h6>
+                            <% }else { %> 
+                                <h5 class="card-title">  
+                                    <%=playdate.title%> 
+                                </h5>
+                            <% } %> 
+
                             <p class="card-text text-muted"><%= playdate.sponser.email %></p>                  
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item ">
-                                <%= new Date(playdate.date.toLocaleString("en-US")) %>
+                                <%= new Date(playdate.date).toLocaleString("en-US").substring(0,24) %>
                             </li>
 
                             <li class="list-group-item ">
@@ -155,21 +165,80 @@
                             <% } %> 
                         </ul>
                         <div class="card-footer ">
-                            <% if(!playdate.sponser._id.equals(currentUser._id)){ %> 
-
-                                <a class="card-link btn btn-info" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/join">Join us</a>
-
-                            <% }else{%>
+                            
+                            <% if(!playdate.active){ %> 
+                                
                                 <a class="card-link btn btn-success" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/modify ">Modify</a>
                                 <form
                                 class="d-inline"
-                                action="/playgrounds/<%=playground._id%>/playdates/<%= playdate._id %>?_method=DELETE"
+                                action="/playgrounds/<%=playground._id%>/playdates/<%= playdate._id %>/?_method=DELETE"
                                 method="POST"
-                            >
-                                <button class="btn btn-sm btn-danger">Cancel</button>
-                            </form>
+                                >
+
+                                <button class="btn btn-danger">Delete</button>
+                                </form>
+                            <% }else{ %> 
+                                <a class="card-link btn btn-success" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/modify ">Modify</a>
+                                <form
+                                class="d-inline"
+                                action="/playgrounds/<%=playground._id%>/playdates/<%= playdate._id %>/cancel?_method=PUT"
+                                method="POST"
+                                >
+                                <button class="btn btn-warning">Cancel</button>
+                                </form>
+                            <% } %> 
+
+                        </div>
+
+                    </div>
+                </div>
+            <% } %> 
+        <% } %> 
+    </div>
+
+    <div class ="row ">
+        <h3>New Playdates</h3>
+        <% for( let playdate of playground.playdates ) { %>  
+            <% if(playdate.active && !playdate.sponser._id.equals(currentUser._id)){ %> 
+                <div class="col-6 col-md-4">    
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">  
+                                <%=playdate.title%> 
+                            </h5>
+                            <p class="card-text text-muted"><%= playdate.sponser.email %></p>                  
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item ">
+                                <%= new Date(playdate.date).toLocaleString("en-US").substring(0,24) %>
+                            </li>
+                            <li class="list-group-item ">
+                                reserved: <% if(playdate.paticipates.length+1===playdate.totalNum) {%>Full 
+                                    <% }%>
+                                    
+                                <%= playdate.paticipates.length+1 %> / <%= playdate.totalNum %>
+                            </li>
+                            <% if(playdate.remarks){ %> 
+                            <li class="list-group-item ">
+                                <%= playdate.remarks %>
+                            </li>
+                            <% } %> 
+                        </ul>
+                        <div class="card-footer ">
+                            <% if(playdate.paticipates.length+1===playdate.totalNum) {%>
+                                <a class="disabled btn btn-info">Full Reserved </a>
+                            <% }else{ %> 
+                                <% for (var l = playdate.paticipates.length, i = 0; i < l; i++) { %>
+                                    <% paticipate = playdate.paticipates[i]%>
+                                    <% if(paticipate.equals(currentUser._id)){ %> 
+                                        <a class="card-link btn btn-info disabled" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/join">Has Joined</a>
+                                        <% break %> 
+                                    <% } else{%> 
+                                        <a class="card-link btn btn-info" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/join">Join us</a>
+                                        <% } %>
+                                    <% } %> 
                                 
-                            <% } %>
+                            <% } %> 
                         </div>
 
                     </div>
