@@ -1,0 +1,117 @@
+<% layout('layouts/boilerplate') %>
+<div class="container ">
+
+
+    <div class ="row ">
+        <h3>My sponsored Playdates</h3>
+        <% for( let playdate of user.playdates ) { %>  
+            <div class="col-6 col-md-4">    
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <% if(!playdate.active){ %> 
+                            <h6 class="card-title text-muted">  
+                                [Cancelled] <%=playdate.title%> 
+                            </h6>
+                            <% }else { %> 
+                                <h5 class="card-title">  
+                                    <%=playdate.title%> 
+                                </h5>
+                            <% } %>             
+                    </div>
+                    <li class="list-group-item ">
+                        <a href="/playgrounds/<%= playdate.playground._id %> "><%= playdate.playground.title %></a>
+                    </li>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item ">
+                            <%= new Date(playdate.date).toLocaleString("en-US").substring(0,24) %>
+                        </li>
+                        <li class="list-group-item ">
+                            reserved: <% if(playdate.paticipates.length+1===playdate.totalNum) {%>Full 
+                                <% }%>
+                                
+                            <%= playdate.paticipates.length+1 %> / <%= playdate.totalNum %>
+                        </li>
+
+                        <% if(playdate.remarks){ %> 
+                        <li class="list-group-item ">
+                            <%= playdate.remarks %>
+                        </li>
+                        <% } %> 
+                    </ul>
+                    <div class="card-footer ">
+                            
+                        <% if(!playdate.active){ %> 
+                            
+                            <a class="card-link btn btn-success" href="/playgrounds/<%= playdate.playground._id %>/playdates/<%= playdate._id %>/modify ">Modify</a>
+                            <form
+                            class="d-inline"
+                            action="/playgrounds/<%=playdate.playground._id%>/playdates/<%= playdate._id %>/?_method=DELETE"
+                            method="POST"
+                            >
+
+                            <button class="btn btn-danger">Delete</button>
+                            </form>
+                        <% }else{ %> 
+                            <a class="card-link btn btn-success" href="/playgrounds/<%= playdate.playground._id %>/playdates/<%= playdate._id %>/modify ">Modify</a>
+                            <form
+                            class="d-inline"
+                            action="/playgrounds/<%=playdate.playground._id%>/playdates/<%= playdate._id %>/cancel?_method=PUT"
+                            method="POST"
+                            >
+                            <button class="btn btn-warning">Cancel</button>
+                            </form>
+                        <% } %> 
+
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+    <div class ="row ">
+        <h3>My Joined Playdates</h3>
+        <% for( let joinedPlaydate of user.joinedPlaydates ) { %>  
+            <div class="col-6 col-md-4">    
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <% if(!joinedPlaydate.active){ %> 
+                            <h6 class="card-title text-muted">  
+                                [Cancelled] <%=joinedPlaydate.title%> 
+                            </h6>
+                            <% }else { %> 
+                                <h5 class="card-title">  
+                                    <%=joinedPlaydate.title%> 
+                                </h5>
+                            <% } %>               
+                    </div>
+                    <li class="list-group-item ">
+                        <a href="/playgrounds/<%= joinedPlaydate.playground._id %> "><%= joinedPlaydate.playground.title %></a>
+                    </li>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item ">
+                            <%= joinedPlaydate.sponsor.username%> : <%= joinedPlaydate.contact%> 
+                        </li>
+                        <li class="list-group-item ">
+                            <%= new Date(joinedPlaydate.date).toLocaleString("en-US").substring(0,24) %>
+                        </li>
+                        <li class="list-group-item ">
+                            reserved: <% if(joinedPlaydate.paticipates.length+1===joinedPlaydate.totalNum) {%>Full 
+                                <% }%>
+                                
+                            <%= joinedPlaydate.paticipates.length+1 %> / <%= joinedPlaydate.totalNum %>
+                        </li>
+
+                        <% if(joinedPlaydate.remarks){ %> 
+                        <li class="list-group-item ">
+                            <%= joinedPlaydate.remarks %>
+                        </li>
+                        <% } %> 
+                    </ul>
+
+                </div>
+            </div>
+        <% } %>
+    </div>
+
+
+</div>

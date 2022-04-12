@@ -11,18 +11,20 @@ module.exports.createPlaydate =async(req,res,next)=>{
     const playground = await Playground.findById(req.params.id);
 
     const playdate = new Playdate(req.body.playdate);
-    playdate.sponser = req.user._id;
+    playdate.sponsor = req.user._id;
     playdate.active = true;
+    playdate.playground = playground;
     if(playdate.contact==""){
         playdate.contact =req.user.email; 
     }
     //console.log(playdate.date)
    // console.log(playdate);
     playground.playdates.push(playdate);
-    
+    req.user.playdates.push(playdate);
     // res.send(req.body);
     await playdate.save();
     await playground.save();
+    await req.user.save();
     
     req.flash('success','Successfully arrange a new playdate!')
     res.redirect(`/playgrounds/${playground._id}`)
@@ -53,23 +55,6 @@ module.exports.renderPlaydateModify =async(req,res)=>{
     res.render('playdates/modify',{playdate, id, datevalue});
 }
 
-module.exports.renderJoinPlaydate =async(req,res)=>{
-    const {id,playdateId} = req.params;
-    const playdate = await Playdate.findById(playdateId);
-    res.render('playdates/join',{id, playdate});
-}
-
-module.exports.joinPlaydate =async(req,res)=>{
-    const {id,playdateId} = req.params;
-    const playdate = await Playdate.findById(playdateId).populate('paticipates');
-    if(!playdate.sponser.equals(req.user._id)){
-        playdate.paticipates.push(req.user);
-        await playdate.save();
-    }
-    req.flash('success','Successfully join the playdate!')
-    res.redirect(`/playgrounds/${id}`)
-}
-
 module.exports.modifyPlaydate =async(req,res,next)=>{
 
     const {id,playdateId} = req.params;
@@ -89,6 +74,24 @@ module.exports.modifyPlaydate =async(req,res,next)=>{
 
 }
 
+module.exports.renderJoinPlaydate =async(req,res)=>{
+    const {id,playdateId} = req.params;
+    const playdate = await Playdate.findById(playdateId);
+    res.render('playdates/join',{id, playdate});
+}
+
+module.exports.joinPlaydate =async(req,res)=>{
+    const {id,playdateId} = req.params;
+    const playdate = await Playdate.findById(playdateId).populate('paticipates');
+    if(!playdate.sponsor.equals(req.user._id)){
+        playdate.paticipates.push(req.user);
+        req.user.joinedPlaydates.push(playdate);
+        await playdate.save();
+        await req.user.save();
+    }
+    req.flash('success','Successfully join the playdate!')
+    res.redirect(`/playgrounds/${id}`)
+}
 
 
 module.exports.cancelPlaydate = async(req, res)=>{
@@ -107,6 +110,7 @@ module.exports.deletePlaydate = async(req, res)=>{
     const {id, playdateId} = req.params;
     //use pull to delete the review related in  the playground
     await Playground.findByIdAndUpdate(id, {$pull:{playdates: playdateId}});
+    await User.findByIdAndUpdate(req.user._id, {$pull:{playdates: playdateId}});
     await Playdate.findByIdAndDelete(playdateId);
     req.flash('success','Successfully Delete the Playdate!')
     res.redirect(`/playgrounds/${id}`);

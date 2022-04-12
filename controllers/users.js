@@ -38,3 +38,28 @@ module.exports.logout=(req,res)=>{
     req.flash('success', 'Goodbye!');
     res.redirect('/playgrounds');
 }
+
+module.exports.renderProfile=async(req,res)=>{
+    const user = await User.findById(req.user._id)
+    .populate({
+            path:'playdates',
+            populate:{
+                path:'paticipates',
+                path:'playground'
+            }
+    }).populate({
+            path:'joinedPlaydates',
+            populate:[
+                {
+                    path:'sponsor',
+                    model: 'User'
+                },
+                {
+                    path:'playground',
+                    model:'Playground'
+                }
+            ]
+    });
+    console.log(user.joinedPlaydates)
+    res.render('users/profile',{user});
+}

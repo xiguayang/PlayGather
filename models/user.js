@@ -21,6 +21,13 @@ const UserSchema= new Schema({
             ref: 'Playdate'
         }
     ],
+    joinedPlaydates:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Playdate'
+        }
+    ],
+
     reviews:[{
         type:Schema.Types.ObjectId,
         ref:'Review'

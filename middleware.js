@@ -36,12 +36,12 @@ module.exports.isReviewAuthor = async(req,res, next) =>{
     next();
 }
 
-module.exports.isPlaydateSponser = async(req,res, next) =>{
+module.exports.isPlaydateSponsor = async(req,res, next) =>{
     const {playdateId} = req.params;
     //console.log(id)
     const playdate = await Playdate.findById(playdateId);
    // console.log(playdate)
-    if(!playdate.sponser.equals(req.user._id)){
+    if(!playdate.sponsor.equals(req.user._id)){
         req.flash('error', 'You do not have permission to do that!');
         return res.redirect(`/playgrounds/${id}`);
     }

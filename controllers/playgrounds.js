@@ -32,7 +32,7 @@ module.exports.showPlayground = async(req,res,next)=>{
         {
             path:'playdates',
             populate:{
-                path:'sponser',
+                path:'sponsor',
                 path:'paticipates'
             }
         }

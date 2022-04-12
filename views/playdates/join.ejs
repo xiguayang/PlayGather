@@ -2,14 +2,14 @@
 <div class="row">
     
     <div class="col-6 offset-3">
-        <% if(playdate.active && !playdate.sponser._id.equals(currentUser._id)){ %> 
+        <% if(playdate.active && !playdate.sponsor._id.equals(currentUser._id)){ %> 
   
                 <div class="card ">
                     <div class="card-body">
                         <h5 class="card-title">  
                             <%=playdate.title%> 
                         </h5>
-                        <p class="card-text text-muted"><%= playdate.sponser.email %></p>                  
+                        <p class="card-text text-muted"><%= playdate.sponsor.email %></p>                  
                     </div>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item ">

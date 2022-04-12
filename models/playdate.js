@@ -4,7 +4,7 @@ const User = require('./user');
 const Schema = mongoose.Schema;
 
 const PlaydateSchema = new Schema({
-    sponser:{
+    sponsor:{
         type: Schema.Types.ObjectId,
         ref:'User'
     },
@@ -40,7 +40,11 @@ const PlaydateSchema = new Schema({
     },
     remarks:{
         type: String
-    }
+    },
+    playground:{
+        type: Schema.Types.ObjectId,
+        ref:'Playground'
+    },
 });
 
 module.exports =mongoose.model('Playdate',PlaydateSchema);

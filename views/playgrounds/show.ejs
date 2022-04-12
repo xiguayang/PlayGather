@@ -133,7 +133,7 @@
     <div class ="row ">
         <h3>My Playdates</h3>
         <% for( let playdate of playground.playdates ) { %>  
-            <% if(playdate.sponser._id.equals(currentUser._id)){ %> 
+            <% if(playdate.sponsor._id.equals(currentUser._id)){ %> 
                 <div class="col-6 col-md-4">    
                     <div class="card mb-3">
                         <div class="card-body">
@@ -148,7 +148,7 @@
                                 </h5>
                             <% } %> 
 
-                            <p class="card-text text-muted"><%= playdate.sponser.email %></p>                  
+                            <p class="card-text text-muted"><%= playdate.sponsor.email %></p>                  
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item ">
@@ -199,14 +199,14 @@
     <div class ="row ">
         <h3>New Playdates</h3>
         <% for( let playdate of playground.playdates ) { %>  
-            <% if(playdate.active && !playdate.sponser._id.equals(currentUser._id)){ %> 
+            <% if(playdate.active && !playdate.sponsor._id.equals(currentUser._id)){ %> 
                 <div class="col-6 col-md-4">    
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">  
                                 <%=playdate.title%> 
                             </h5>
-                            <p class="card-text text-muted"><%= playdate.sponser.email %></p>                  
+                            <p class="card-text text-muted"><%= playdate.sponsor.email %></p>                  
                         </div>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item ">
@@ -225,9 +225,12 @@
                             <% } %> 
                         </ul>
                         <div class="card-footer ">
-                            <% if(playdate.paticipates.length+1===playdate.totalNum) {%>
+                            <% if((playdate.paticipates.length+1)===playdate.totalNum) {%>
                                 <a class="disabled btn btn-info">Full Reserved </a>
                             <% }else{ %> 
+                                <% if(playdate.paticipates.length===0){ %> 
+                                    <a class="card-link btn btn-info" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/join">Join us</a>
+                                <% } %> 
                                 <% for (var l = playdate.paticipates.length, i = 0; i < l; i++) { %>
                                     <% paticipate = playdate.paticipates[i]%>
                                     <% if(paticipate.equals(currentUser._id)){ %> 
@@ -235,8 +238,8 @@
                                         <% break %> 
                                     <% } else{%> 
                                         <a class="card-link btn btn-info" href="/playgrounds/<%= playground._id %>/playdates/<%= playdate._id %>/join">Join us</a>
-                                        <% } %>
-                                    <% } %> 
+                                    <% } %>
+                                <% } %> 
                                 
                             <% } %> 
                         </div>

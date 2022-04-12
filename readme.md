@@ -33,9 +33,9 @@ A platform provides private social network for you and your child. An easy way t
 
     1 playground ===> many reviews
     1 playgronud ===> many playdates
-    1 playdate ====> 1 user(sponser)
+    1 playdate ====> 1 user(sponsor)
     1 playdate ====> many users(participants)
-    1 user ====> many playdates as sponsers
+    1 user ====> many playdates as sponsors
 
     1 user ===> many reviews
 
