@@ -31,6 +31,7 @@ router.route('/')
 
 //add a new playground: playgrounds/new
 router.get('/new',isLoggedIn, playgrounds.renderNewForm);
+router.post('/search', playgrounds.searchPlaygrounds);
 
 //playground/new: post save to db
 //add validation middleware function for add new object

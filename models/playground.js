@@ -11,7 +11,7 @@ ImageSchema.virtual('thumbnail').get(function(){
     return this.url.replace('/upload','/upload/w_200');
 });
 const PlaygroundSchema = new Schema({
-    
+    place_id:String,
     title: String,
     description: String,
     theme: String,

@@ -35,9 +35,15 @@
             <h1>PlayGather</h1>
             <p class="lead"> Welcome to PlayGather! <br> Explore and have fun with your littles <br>
                 -while still getting to enjoy what you love, as well!</p>
-            <a href="/playgrounds" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">View
-                PlayGrounds</a>
+            <!-- <a href="/playgrounds" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">View
+                PlayGrounds</a> -->
                 <!-- Adding a search box to search playgrounds in the zipcode -->
+                <form class="d-flex"                     
+                action="/playgrounds/search "
+                method="POST"> 
+                <input class="form-control me-2" type="search" name="location" placeholder="Enter location" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>    
         </main>
 
         <footer class="mt-auto text-white-50">

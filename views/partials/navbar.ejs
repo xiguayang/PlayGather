@@ -19,6 +19,12 @@
                 <a class="nav-link" href="/playgrounds/new">New</a>
             </div>
             <div class="navbar-nav ms-auto">
+                <form class="d-flex"                     
+                    action="/playgrounds/search "
+                    method="POST"> 
+                    <input class="form-control me-2" type="search" name="location" placeholder="Enter location" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
                 <% if(!currentUser){%>
                     <a class="nav-link" href="/login">Login</a>
                     <a class="nav-link" href="/register">Register</a>
