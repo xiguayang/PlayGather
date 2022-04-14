@@ -33,7 +33,7 @@ const seedDB = async () => {
     console.log(sandiegoPlaygrounds.length);
     for(let i = 5; i<sandiegoPlaygrounds.length;i++){
         const newPlaygraound = new Playground({            
-        author:'624f2616f153f3fbaea6c795',
+        author:process.env.ADMIN,
         address:`${sandiegoPlaygrounds[i].formatted_address}`,
         title:`${sandiegoPlaygrounds[i].name}`,
         devices:`${sample(devices)}`,
