@@ -15,6 +15,7 @@ const upload = multer({ storage })
 
 router.route('/')
     .get(catchAsync(playgrounds.index))
+
     .post(isLoggedIn,upload.array('image'),validatePlayground,catchAsync(playgrounds.createPlayground));
     // .post(upload.array('image'),(req,res)=>{
     //     console.log(req.body,req.files);
@@ -31,7 +32,9 @@ router.route('/')
 
 //add a new playground: playgrounds/new
 router.get('/new',isLoggedIn, playgrounds.renderNewForm);
-router.post('/search', playgrounds.searchPlaygrounds);
+router.route('/search')
+    .post(playgrounds.searchPlaygrounds)
+    .get(catchAsync(playgrounds.listPlayground))
 
 //playground/new: post save to db
 //add validation middleware function for add new object

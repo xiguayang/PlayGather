@@ -7,6 +7,13 @@ module.exports.index = async(req,res,next)=>{
     res.render('playgrounds/index',{playgrounds});
 }
 
+module.exports.listPlayground = async(req,res,next)=>{
+    const {addr} = req.query;
+    //console.log(addr);
+    const playgrounds = await Playground.find({zip:addr});
+    res.render('playgrounds/index',{playgrounds});
+}
+
 module.exports.renderNewForm =(req,res)=>{
     res.render('playgrounds/new');
 }
@@ -96,6 +103,12 @@ module.exports.searchPlaygrounds = async(req,res,next)=>{
                 place_id: result['place_id'],
                 title:result['name']
             }
+            let zipvalue = result.formatted_address.match(/,\s\w{2}\s(\d{5})/);
+            if(zipvalue){
+                zipvalue=zipvalue[1]
+            }else {
+                zipvalue="00000";
+            } 
             const update={            
                 author:'624f2616f153f3fbaea6c795',
                 address:result['formatted_address'],
@@ -107,7 +120,8 @@ module.exports.searchPlaygrounds = async(req,res,next)=>{
                         url: 'https://res.cloudinary.com/cloudyangz/image/upload/v1649180833/PlayGather/uu5rn9tnf9vout5c5jf8.jpg',
                         filename: 'PlayGather/uu5rn9tnf9vout5c5jf8',    
                     },
-                ]
+                ],
+                zip:zipvalue
             }
             await Playground.findOneAndUpdate(
                 filter,                 // find a document with that filter
@@ -120,6 +134,6 @@ module.exports.searchPlaygrounds = async(req,res,next)=>{
         console.log(e)
     }
 
-    res.redirect('/playgrounds')
+    res.redirect(`/playgrounds/search?addr=${location}`)
 }
 

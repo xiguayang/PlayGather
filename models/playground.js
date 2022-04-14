@@ -34,7 +34,8 @@ const PlaygroundSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Playdate'
         }
-    ]
+    ],
+    zip:String
 });
 
 PlaygroundSchema.post('findOneAndDelete', async function(doc){
